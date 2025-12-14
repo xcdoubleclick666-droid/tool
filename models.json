@@ -1,0 +1,52 @@
+{
+  "1": {
+    "motor_power": "22",
+    "motor_rpm": "4566",
+    "motor_pulley_d": "23",
+    "use_secondary": false,
+    "sec1": "",
+    "sec2": "",
+    "roller_pulley_d": "50",
+    "roller_diameter": "45",
+    "belt_kmh": "17.816",
+    "computed": {
+      "roller_rpm": "-",
+      "motor_rpm": "-",
+      "belt_kmh": "-",
+      "gear_ratio": "-",
+      "sec1": "-",
+      "sec2": "-",
+      "roller_diameter": "-"
+    },
+    "extras": {
+      "111": "21"
+    },
+    "fields": {
+      "跑带宽度": "",
+      "好好": "",
+      "好好一": ""
+    }
+  },
+  "brt1": {
+    "motor_power": "22",
+    "motor_rpm": "4566",
+    "motor_pulley_d": "23",
+    "use_secondary": false,
+    "sec1": "",
+    "sec2": "",
+    "roller_pulley_d": "50",
+    "roller_diameter": "45",
+    "belt_kmh": "17.816",
+    "computed": {
+      "roller_rpm": "-",
+      "motor_rpm": "-",
+      "belt_kmh": "-",
+      "gear_ratio": "-",
+      "sec1": "-",
+      "sec2": "-",
+      "roller_diameter": "-"
+    },
+    "extras": {},
+    "fields": {}
+  }
+}
