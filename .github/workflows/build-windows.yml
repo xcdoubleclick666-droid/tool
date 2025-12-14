@@ -18,6 +18,31 @@ jobs:
         run: pip install -r requirements.txt
       - name: Build with PyInstaller
         run: pyinstaller --clean fitness_toolbox.spec
+
+      - name: Collect diagnostics
+        run: |
+          echo === PYINSTALLER VERSION === > diag.txt
+          pyinstaller --version >> diag.txt 2>&1 || true
+          echo === PYTHON VERSION === >> diag.txt
+          python -V >> diag.txt 2>&1 || true
+          echo === WORKSPACE LISTING === >> diag.txt
+          dir /s /b >> diag.txt 2>&1 || true
+          if exist dist (
+            echo === DIST LISTING === >> diag.txt
+            dir dist >> diag.txt 2>&1
+            powershell -Command "Compress-Archive -Path dist -DestinationPath dist.zip -Force"
+          ) else (
+            echo DIST_NOT_FOUND >> diag.txt
+          )
+
+      - name: Upload diagnostics
+        uses: actions/upload-artifact@v4
+        with:
+          name: FitnessToolbox-diagnostics
+          path: |
+            diag.txt
+            dist.zip
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
