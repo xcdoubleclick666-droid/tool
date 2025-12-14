@@ -2,21 +2,12 @@
 block_cipher = None
 
 from PyInstaller.utils.hooks import collect_data_files, collect_dynamic_libs
-from PyInstaller.utils.hooks.qt import pyside6_plugins_binaries
 
 # collect PySide6 data files and dynamic libs
 datas = collect_data_files('PySide6')
 binaries = collect_dynamic_libs('PySide6')
 
-# include Qt platform plugins (e.g. qwindows.dll)
-try:
-    plugin_binaries = pyside6_plugins_binaries(('platforms',))
-    binaries += plugin_binaries
-except Exception:
-    # best-effort: continue if hook not available
-    pass
-
-# include runtime JSONs and PySide6 datas
+# include runtime JSONs
 datas += [
     ('models.json', '.'),
     ('fields.json', '.'),
