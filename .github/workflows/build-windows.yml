@@ -20,20 +20,21 @@ jobs:
         run: pyinstaller --clean fitness_toolbox.spec
 
       - name: Collect diagnostics
+        shell: pwsh
         run: |
-          echo === PYINSTALLER VERSION === > diag.txt
-          pyinstaller --version >> diag.txt 2>&1 || true
-          echo === PYTHON VERSION === >> diag.txt
-          python -V >> diag.txt 2>&1 || true
-          echo === WORKSPACE LISTING === >> diag.txt
-          dir /s /b >> diag.txt 2>&1 || true
-          if exist dist (
-            echo === DIST LISTING === >> diag.txt
-            dir dist >> diag.txt 2>&1
-            powershell -Command "Compress-Archive -Path dist -DestinationPath dist.zip -Force"
-          ) else (
-            echo DIST_NOT_FOUND >> diag.txt
-          )
+          "=== PYINSTALLER VERSION ===" | Out-File -FilePath diag.txt -Encoding utf8
+          try { pyinstaller --version 2>&1 | Out-File -FilePath diag.txt -Append -Encoding utf8 } catch {"pyinstaller-not-found" | Out-File -FilePath diag.txt -Append -Encoding utf8}
+          "=== PYTHON VERSION ===" | Out-File -FilePath diag.txt -Append -Encoding utf8
+          python -V 2>&1 | Out-File -FilePath diag.txt -Append -Encoding utf8
+          "=== WORKSPACE LISTING ===" | Out-File -FilePath diag.txt -Append -Encoding utf8
+          Get-ChildItem -Recurse -Force -File | ForEach-Object { $_.FullName } | Out-File -FilePath diag.txt -Append -Encoding utf8
+          if (Test-Path -Path dist) {
+            "=== DIST LISTING ===" | Out-File -FilePath diag.txt -Append -Encoding utf8
+            Get-ChildItem dist | Out-String | Out-File -FilePath diag.txt -Append -Encoding utf8
+            Compress-Archive -Path dist -DestinationPath dist.zip -Force
+          } else {
+            "DIST_NOT_FOUND" | Out-File -FilePath diag.txt -Append -Encoding utf8
+          }
 
       - name: Upload diagnostics
         uses: actions/upload-artifact@v4
