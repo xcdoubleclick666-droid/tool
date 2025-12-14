@@ -19,7 +19,7 @@ jobs:
       - name: Build with PyInstaller
         run: pyinstaller --clean --onefile --windowed fitness_toolbox.spec
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: FitnessToolbox-windows
           path: dist/FitnessToolbox.exe
